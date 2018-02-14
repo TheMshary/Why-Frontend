@@ -6,7 +6,7 @@ import Why from './Why/Main';
 // import Sequence from './Components/Sequence';
 import registerServiceWorker from './registerServiceWorker';
 // import { Router, Route, hashHistory } from 'react-router';
-
+// import Test from './Test';
 
 let production = false;
 
@@ -20,6 +20,7 @@ if(production) {
 }
 
 ReactDOM.render(
+	// <Test />,
 	<Why url={url}/>,
 	document.getElementById('root')
 );

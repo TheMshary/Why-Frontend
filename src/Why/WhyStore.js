@@ -3,7 +3,9 @@ import { extendObservable } from "mobx";
 class myWhyStore {
 	constructor() {
 		extendObservable(this, {
-				leaderboard: []
+				leaderboard: [],
+				open: false,
+				score: null,
 			}
 		)
 	}

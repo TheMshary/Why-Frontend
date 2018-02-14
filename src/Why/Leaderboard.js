@@ -3,25 +3,44 @@ import { observer } from "mobx-react";
 import store from './WhyStore.js';
 import {
 	Button,
-	ButtonToolbar,
-	// ButtonGroup,
-	// Jumbotron,
-	Grid,
 	Row,
 	Col,
-	FormGroup,
-	// FormControl,
-	// InputGroup,
 } from 'react-bootstrap';
-import uuid from 'uuid';
 import $ from "jquery";
-import { BrowserRouter, Route } from 'react-router-dom';
-import { LinkContainer } from "react-router-bootstrap";
 
+class Score extends Component {
+  switch(score, e) {
+    if (store.score != null) {
+      if (store.score.id == score.id) {
+        store.open = false
+        store.score = null
+        return
+      }
+    }
+    store.open = true
+    store.score = score
+  }
+
+  render() {
+    let score = this.props.score;
+    return (
+      <tr key={score.id}>
+        <td>{score.nickname}</td>
+        <td>{score.score}</td>
+        <td>{score.statement}</td>
+        <td>
+          <Button onClick={this.switch.bind(this, score)}>
+            Answers
+          </Button>
+        </td>
+      </tr>
+    )
+  }
+}
 
 const Leaderboard = observer(class Leaderboard extends Component {
-	componentDidMount() {
-		this.getLeaderboard()
+  componentDidMount() {
+    this.getLeaderboard()
 	}
 
 	getLeaderboard() {
@@ -31,7 +50,6 @@ const Leaderboard = observer(class Leaderboard extends Component {
 			dataType: "json",
 			success: function(data){
         store.leaderboard = data.top
-        console.log(store.leaderboard)
 			},
 			error: function(xhr, status, err){
 				console.log(err);
@@ -59,33 +77,13 @@ const Leaderboard = observer(class Leaderboard extends Component {
 		});
 		this.getLeaderboard()
   }
-  
+
 	render() {
+    let id = 0
     let leaderboard = store.leaderboard.map((score) => {
-      let i = 0;
-      let answers = score.answer_set.map((answer) => {
-        i = i + 1;
-        return (
-          <div key={answer.id+"-"+i}>
-            <p>{i}. {answer.answer} (flag: {answer.flags})</p>
-            <button onClick={() => {this.flagAns(answer)}}>Flag as false/BS</button>
-          </div>
-        )
-      })
+      id++
       return (
-        <tr key={score.id}>
-          <td>{score.nickname}</td>
-          <td>{score.score}</td>
-          <td>{score.statement}</td>
-          <td><LinkContainer exact to={"/"+score.id}><a>Answers</a></LinkContainer></td>
-          <td><Route exact path={"/"+score.id} render={()=>{
-            return (
-              <div>
-                {answers}
-              </div>
-            )
-          }} /></td>
-        </tr>
+        <Score key={id} score={score} />
       )
   })
 		return (
@@ -95,11 +93,9 @@ const Leaderboard = observer(class Leaderboard extends Component {
             <h3>Leaderboard (Top)</h3>
           </Col>
           <Col>
-            <LinkContainer exact to={"/"}>
-              <Button bsStyle="primary" bsSize="xsmall">
-                Collapse Answers
-              </Button>
-            </LinkContainer>
+            <Button bsStyle="primary" bsSize="xsmall">
+              Collapse Answers
+            </Button>
           </Col>
         </Row>
         <Row className="show-grid">

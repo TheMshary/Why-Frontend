@@ -1,23 +1,16 @@
 import React, { Component } from 'react';
 import { observer } from "mobx-react";
-// import store from '../Store.js';
 import {
-	Button,
-	ButtonToolbar,
-	// ButtonGroup,
-	// Jumbotron,
 	Grid,
 	Row,
 	Col,
 	FormGroup,
-	// FormControl,
-	// InputGroup,
 } from 'react-bootstrap';
 import uuid from 'uuid';
 import $ from "jquery";
-import { BrowserRouter, Route } from 'react-router-dom';
-import { LinkContainer } from "react-router-bootstrap";
+import { BrowserRouter } from 'react-router-dom';
 import Leaderboard from './Leaderboard';
+import Answers from './Answers';
 
 
 const Main = observer(class Main extends Component {
@@ -84,8 +77,6 @@ const Main = observer(class Main extends Component {
 	}
 
 	render() {
-		console.log("LEADERBOARD: ");
-		console.log(this.state.leaderboard);
 		let answers = this.state.answers.map((answer) => {
 			return (
 				<h5 key={answer.id}>{answer.answer}</h5>
@@ -112,7 +103,18 @@ const Main = observer(class Main extends Component {
 							<hr/>
 						</Col>
 					</Row>
-					<Leaderboard url={this.props.url} ref="leaderboard"/>
+					<table>
+						<tbody>
+							<tr>
+								<td>
+									<Leaderboard url={this.props.url} ref="leaderboard"/>
+								</td>
+								<td>
+									<Answers />
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</Grid>
 			</BrowserRouter>
 		)
