@@ -48,11 +48,6 @@ const Main = observer(class Main extends Component {
 	submitScore() {
 		let nickname = prompt("Enter your nickname please");
 		let answers = this.state.answers
-		console.log("ANSWERS: ")
-		console.log(answers)
-		// for(var i = 0; i<answers.length; i++) {
-		// 	delete answers[i].id
-		// }
 		let data = {
 			score: this.state.score,
 			nickname: nickname === "" ? null : nickname,
@@ -60,7 +55,6 @@ const Main = observer(class Main extends Component {
 			'answer_set': JSON.stringify(this.state.answers)
 		};
 
-		console.log(data)
 		$.ajax({
 			url: "http://"+this.props.url+"/leaderboard/",
 			type: "POST",
@@ -73,6 +67,10 @@ const Main = observer(class Main extends Component {
 				console.log(err);
 			}
 		});
+		this.getLeaderboard()
+	}
+
+	getLeaderboard() {
 		this.refs.leaderboard.getLeaderboard()
 	}
 
@@ -109,8 +107,8 @@ const Main = observer(class Main extends Component {
 								<td>
 									<Leaderboard url={this.props.url} ref="leaderboard"/>
 								</td>
-								<td>
-									<Answers />
+								<td style={{paddingLeft: '20px'}}>
+									<Answers getLeaderboard={() => {this.getLeaderboard()}} url={this.props.url}/>
 								</td>
 							</tr>
 						</tbody>

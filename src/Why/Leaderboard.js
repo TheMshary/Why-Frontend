@@ -1,42 +1,14 @@
 import React, { Component } from 'react';
 import { observer } from "mobx-react";
 import store from './WhyStore.js';
+import Score from './Score.js';
 import {
-	Button,
 	Row,
 	Col,
 } from 'react-bootstrap';
 import $ from "jquery";
 
-class Score extends Component {
-  switch(score, e) {
-    if (store.score != null) {
-      if (store.score.id == score.id) {
-        store.open = false
-        store.score = null
-        return
-      }
-    }
-    store.open = true
-    store.score = score
-  }
 
-  render() {
-    let score = this.props.score;
-    return (
-      <tr key={score.id}>
-        <td>{score.nickname}</td>
-        <td>{score.score}</td>
-        <td>{score.statement}</td>
-        <td>
-          <Button onClick={this.switch.bind(this, score)}>
-            Answers
-          </Button>
-        </td>
-      </tr>
-    )
-  }
-}
 
 const Leaderboard = observer(class Leaderboard extends Component {
   componentDidMount() {
@@ -56,27 +28,6 @@ const Leaderboard = observer(class Leaderboard extends Component {
 			}
 		});
   }
-  
-	flagAns(ans) {
-		console.log(ans.id)
-		let data = {
-			answer_id: ans.id
-		}
-
-		$.ajax({
-			url: "http://"+this.props.url+"/flag/",
-			type: "POST",
-			dataType: "json",
-			data: data,
-			success: function(data){
-				console.log("flagged.");
-			},
-			error: function(xhr, status, err){
-				console.log(err);
-			}
-		});
-		this.getLeaderboard()
-  }
 
 	render() {
     let id = 0
@@ -91,11 +42,6 @@ const Leaderboard = observer(class Leaderboard extends Component {
         <Row className="show-grid">
           <Col>
             <h3>Leaderboard (Top)</h3>
-          </Col>
-          <Col>
-            <Button bsStyle="primary" bsSize="xsmall">
-              Collapse Answers
-            </Button>
           </Col>
         </Row>
         <Row className="show-grid">
