@@ -8,18 +8,11 @@ import $ from "jquery";
 
 
 const Answers = observer((props) => {
-  const Answer = ({answer}) => {
-    return (
-      <p><span style={{ fontSize: '10px' }}>({answer.flags})</span> {answer.answer}</p>
-    )
-  }
   const answer_map = (answer, flagAns, getLeaderboard, url) => {
     return (
-      <div key={answer.id}>
-        <Answer answer={answer} />
-        <Button bsSize='small' bsStyle='info' onClick={() => {flagAns(answer, {url: url, getLeaderboard: getLeaderboard})}}>
-          <span style={{ fontSize: '10px' }}>Flag as</span> <span style={{ fontWeight: 'bold' }}>nonesense</span>
-        </Button>
+      <div key={answer.id} style={{ paddingLeft: "70px" }}>
+        <Button  bsSize='small' bsStyle='info' style={{ fontSize: '10px' }} onClick={() => {flagAns(answer, {url: url, getLeaderboard: getLeaderboard})}}>Flag</Button>
+        <span style={{ fontSize: '10px' }}>({answer.flags})</span> <span style={{ fontWeight: 'bold' }}>{answer.answer}</span>
       </div>
     )
   }
