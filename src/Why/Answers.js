@@ -14,8 +14,6 @@ const Answers = observer((props) => {
         <td>
           <Button
             color="link"
-            bsSize='small'
-            bsStyle='info'
             style={{ fontSize: '10px' }}
             onClick={() => {flagAns(answer, {url: url, getLeaderboard: getLeaderboard})}}>
               Flag

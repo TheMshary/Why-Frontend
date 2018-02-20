@@ -20,6 +20,13 @@ const Leaderboard = observer(class Leaderboard extends Component {
 			type: "GET",
 			dataType: "json",
 			success: function(data){
+        if (store.score !== null) {
+          for (let item in data.top) {
+            if (data.top[item].id == store.score.id) {
+              store.score = data.top[item]
+            }
+          }
+        }
         store.leaderboard = data.top
 			},
 			error: function(xhr, status, err){
