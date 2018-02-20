@@ -7,6 +7,8 @@ import Why from './Why/Main';
 import registerServiceWorker from './registerServiceWorker';
 // import { Router, Route, hashHistory } from 'react-router';
 // import Test from './Test';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'react-bootstrap-table/dist/react-bootstrap-table-all.min.css';
 
 let production = false;
 

@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { observer } from "mobx-react";
 import store from './WhyStore.js';
-import {
-	Button,
-} from 'react-bootstrap';
+// import {
+// 	Button,
+// } from 'react-bootstrap';
+import { Button } from 'reactstrap';
 
 const Score = observer(class Score extends Component {
   switch(score, e) {
@@ -20,10 +21,10 @@ const Score = observer(class Score extends Component {
 
   render() {
     let score = this.props.score;
-    let style = 'info'
+    let color = 'link'
     if (store.score != null) {
       if (store.score.id == score.id) {
-        style = 'primary'
+        color = 'primary'
       }
     }
     return (
@@ -32,7 +33,7 @@ const Score = observer(class Score extends Component {
         <td>{score.score}</td>
         <td>{score.statement}</td>
         <td>
-          <Button bsStyle={style} onClick={this.switch.bind(this, score)}>
+          <Button color={color} outline={color === 'primary'} onClick={this.switch.bind(this, score)}>
             Answers
           </Button>
         </td>

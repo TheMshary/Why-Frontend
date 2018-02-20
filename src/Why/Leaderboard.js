@@ -9,7 +9,6 @@ import {
 import $ from "jquery";
 
 
-
 const Leaderboard = observer(class Leaderboard extends Component {
   componentDidMount() {
     this.getLeaderboard()
@@ -46,7 +45,7 @@ const Leaderboard = observer(class Leaderboard extends Component {
         </Row>
         <Row className="show-grid">
           <Col>
-            <table>
+            <table className="table table-hover table-striped table-sm">
               <thead>
                 <tr>
                   <th>Nickname</th>
