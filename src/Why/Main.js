@@ -110,6 +110,16 @@ const Main = observer(class Main extends Component {
 				<h5 key={answer.id}>{answer.answer}</h5>
 			)
 		})
+
+		let answersButtons = <div>
+			<Button color="primary" outline onClick={this.submitScore.bind(this)}>
+				Give up and submit score to leaderboard
+			</Button>
+			<br />
+			<Button color="link" onClick={this.clrAns.bind(this)} style={{ align: "right" }}>
+				Clear Answers
+			</Button>
+		</div>
 		
 		return (
 			<BrowserRouter>
@@ -130,13 +140,7 @@ const Main = observer(class Main extends Component {
 									<input style={{ width:1000 }} type="text" placeholder={this.state.placeholder} ref="answer" />
 								</FormGroup>
 							</form>
-							{this.state.submissionFlag ? <Button color="link" onClick={this.submitScore.bind(this)}>
-								Give up and submit score to leaderboard
-							</Button> : null}
-							<br />
-							<Button color="link" onClick={this.clrAns.bind(this)}>
-								Clear Answers
-							</Button>
+							{this.state.submissionFlag ? answersButtons : null}
 							<hr/>
 						</Col>
 					</Row>
