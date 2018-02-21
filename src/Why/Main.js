@@ -11,6 +11,7 @@ import $ from "jquery";
 import { BrowserRouter } from 'react-router-dom';
 import Leaderboard from './Leaderboard';
 import Answers from './Answers';
+import { Button } from 'reactstrap';
 
 
 const Main = observer(class Main extends Component {
@@ -30,7 +31,16 @@ const Main = observer(class Main extends Component {
 		e.preventDefault()
 		if(this.refs.answer.value !== "") {
 			if(!this.state.submissionFlag) {
-				this.setState({statement: this.refs.answer.value, placeholder: "Your answer goes here", msg: "Why?", score: this.state.score +1, submissionFlag: true}, () => {this.refs.answer.value = ""})
+				this.setState({
+					statement: this.refs.answer.value, 
+					placeholder: "Your answer goes here", 
+					msg: "Why?", 
+					score: this.state.score +1, 
+					submissionFlag: true
+				}, () => {
+					this.refs.answer.value = ""
+					}
+				)
 				return
 			}
 			let answers = this.state.answers
@@ -43,6 +53,17 @@ const Main = observer(class Main extends Component {
 			this.setState({answers: answers, msg: "Why?", score: this.state.score +1, submissionFlag: true},
 				() => {console.log("ANSWERS: "); console.log(this.state.answers)})
 		}
+	}
+
+	clearAnswers() {
+		this.setState({
+			answers: [],
+			msg: "Enter a statement.",
+			score: -1,
+			submissionFlag: false,
+			statement: "",
+			placeholder: "Your statement goes here",
+		})
 	}
 
 	submitScore() {
@@ -67,11 +88,20 @@ const Main = observer(class Main extends Component {
 				console.log(err);
 			}
 		});
+		this.clearAnswers()
 		this.getLeaderboard()
 	}
 
 	getLeaderboard() {
 		this.refs.leaderboard.getLeaderboard()
+	}
+
+	clrAns = () => {
+		if(window.confirm("Are you sure you want to clear ALL your answers?")) {
+			this.clearAnswers();
+		} else {
+			return;
+		}
 	}
 
 	render() {
@@ -84,6 +114,11 @@ const Main = observer(class Main extends Component {
 		return (
 			<BrowserRouter>
 				<Grid>
+					<div style={{ backgroundColor: '#ddd' }}>
+						<p>
+							v2.0: Revamped Leaderboard UX/UI
+						</p>
+					</div>
 					<Row className="show-grid">
 						<Col>
 							<h1>{this.state.statement}</h1>
@@ -95,19 +130,23 @@ const Main = observer(class Main extends Component {
 									<input style={{ width:1000 }} type="text" placeholder={this.state.placeholder} ref="answer" />
 								</FormGroup>
 							</form>
-							{this.state.submissionFlag ? <button onClick={this.submitScore.bind(this)}>
+							{this.state.submissionFlag ? <Button color="link" onClick={this.submitScore.bind(this)}>
 								Give up and submit score to leaderboard
-							</button> : null}
+							</Button> : null}
+							<br />
+							<Button color="link" onClick={this.clrAns.bind(this)}>
+								Clear Answers
+							</Button>
 							<hr/>
 						</Col>
 					</Row>
 					<table>
 						<tbody>
 							<tr>
-								<td>
+								<td style={{ verticalAlign: 'top' }}>
 									<Leaderboard url={this.props.url} ref="leaderboard"/>
 								</td>
-								<td style={{paddingLeft: '20px'}}>
+								<td style={{ paddingLeft: '20px', verticalAlign: 'top' }}>
 									<Answers getLeaderboard={() => {this.getLeaderboard()}} url={this.props.url}/>
 								</td>
 							</tr>
