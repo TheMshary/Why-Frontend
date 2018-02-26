@@ -32,10 +32,10 @@ const Main = observer(class Main extends Component {
 		if(this.refs.answer.value !== "") {
 			if(!this.state.submissionFlag) {
 				this.setState({
-					statement: this.refs.answer.value, 
-					placeholder: "Your answer goes here", 
-					msg: "Why?", 
-					score: this.state.score +1, 
+					statement: this.refs.answer.value,
+					placeholder: "Your answer goes here",
+					msg: "Why?",
+					score: this.state.score +1,
 					submissionFlag: true
 				}, () => {
 					this.refs.answer.value = ""
@@ -64,10 +64,11 @@ const Main = observer(class Main extends Component {
 			statement: "",
 			placeholder: "Your statement goes here",
 		})
+		this.refs.answer.value = ""
 	}
 
 	submitScore() {
-		let nickname = prompt("Enter your nickname please");
+		let nickname = prompt("Enter your nickname for the leaderboard please");
 		let answers = this.state.answers
 		let data = {
 			score: this.state.score,
@@ -89,7 +90,7 @@ const Main = observer(class Main extends Component {
 			}
 		});
 		this.clearAnswers()
-		this.getLeaderboard()
+		alert("Refresh the page to see your place on the leaderboard.")
 	}
 
 	getLeaderboard() {
@@ -120,7 +121,7 @@ const Main = observer(class Main extends Component {
 				Clear Answers
 			</Button>
 		</div>
-		
+
 		return (
 			<BrowserRouter>
 				<Grid>
@@ -163,7 +164,3 @@ const Main = observer(class Main extends Component {
 })
 
 export default Main;
-
-
-
-

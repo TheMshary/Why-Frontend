@@ -35,22 +35,22 @@ const Answers = observer((props) => {
 
   const flagAns = (ans, props) => {
     let data = {
-      answer_id: ans.id
-		}
+        answer_id: ans.id
+	}
 
-		$.ajax({
-			url: "http://"+props.url+"/flag/",
-			type: "POST",
-			data: data,
-			success: function(data){
-				console.log("("+ans.id+") was flagged.");
-			},
-			error: function(xhr, status, err){
-				console.log(xhr);
-				console.log(err);
-			}
-		});
-		props.getLeaderboard()
+	$.ajax({
+		url: "http://"+props.url+"/flag/",
+		type: "POST",
+		data: data,
+		success: function(data){
+			console.log("("+ans.id+") was flagged.");
+		},
+		error: function(xhr, status, err){
+			console.log(xhr);
+			console.log(err);
+		}
+	});
+	props.getLeaderboard()
   }
 
   if(store.open){
