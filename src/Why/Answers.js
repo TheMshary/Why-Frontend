@@ -56,7 +56,8 @@ const Answers = observer((props) => {
 
   const flagAns = (ans, props) => {
     let data = {
-        answer_id: ans.id
+        answer_id: ans.id,
+        csrfmiddlewaretoken: csrftoken,
 	}
 
 	$.ajax({
